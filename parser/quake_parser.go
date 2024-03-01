@@ -8,8 +8,6 @@ import (
 )
 
 func ParserQuakeGameFile(logFilePath string, gameID int) *QuakeGames {
-	fmt.Println(logFilePath, gameID)
-
 	logFile, err := os.Open(logFilePath)
 	if err != nil {
 		fmt.Printf("Error opening file: %s\n", err)
@@ -23,7 +21,6 @@ func ParserQuakeGameFile(logFilePath string, gameID int) *QuakeGames {
 }
 
 func createGamesFromLogFile(scanner *bufio.Scanner, targetGame int) *QuakeGames {
-	fmt.Println("Creating games from log file")
 	groupedQuakeGames := NewGroupQuakeGames()
 	var currentGameId = 0
 	var currentGame *Game = nil
@@ -31,24 +28,20 @@ func createGamesFromLogFile(scanner *bufio.Scanner, targetGame int) *QuakeGames 
 	for scanner.Scan() {
 		logLine := scanner.Text()
 		event := logLine[7:12]
-		fmt.Println(event)
 
 		switch event {
 		case "Kill:":
 			if targetGame == currentGameId || targetGame == -1 {
-				fmt.Println("Adding kill")
 				killing := parseKillLine(logLine)
 				currentGame.AddKill(killing)
 			}
 		case "InitG":
 			currentGameId++
 			if targetGame == currentGameId || targetGame == -1 {
-				fmt.Println("Creating new game obj")
 				currentGame = NewGame()
 			}
 		case "Shutd":
 			if targetGame == currentGameId || targetGame == -1 {
-				fmt.Println("Flushing game")
 				groupedQuakeGames.AddGame(fmt.Sprintf("game_%d", currentGameId), currentGame)
 			}
 		}
@@ -69,7 +62,5 @@ func parseKillLine(logLine string) *Killing {
 	killerName := names[0]
 	killedName := names[1]
 	weaponUsed := detailParts[1]
-
-	fmt.Printf("Killer: %s, Killed: %s, Weapon: %s\n", killerName, killedName, weaponUsed)
 	return &Killing{killerName, killedName, weaponUsed}
 }

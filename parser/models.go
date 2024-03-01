@@ -5,10 +5,11 @@ type QuakeGames struct {
 }
 
 type Game struct {
-	TotalKills  int            `json:"total_kills"`
-	Players     []string       `json:"players"`
-	Kills       map[string]int `json:"kills"`
-	KillByMeans map[string]int `json:"kills_by_means"`
+	TotalKills  int                 `json:"total_kills"`
+	Players     []string            `json:"players"`
+	PlayerSet   map[string]struct{} `json:"-"`
+	Kills       map[string]int      `json:"kills"`
+	KillByMeans map[string]int      `json:"kills_by_means"`
 }
 
 type Killing struct {
@@ -33,17 +34,21 @@ func NewGame() *Game {
 		Kills:       make(map[string]int),
 		KillByMeans: make(map[string]int),
 		Players:     make([]string, 0),
+		PlayerSet:   make(map[string]struct{}),
 	}
 }
 
 // AddKill increments the kill count for a player and total kills
 func (g *Game) AddKill(killAction *Killing) {
-	if _, exists := g.Kills[killAction.Killer]; !exists {
+	if _, exists := g.PlayerSet[killAction.Killer]; !exists && killAction.Killer != "<world>" {
 		g.Players = append(g.Players, killAction.Killer)
+		g.PlayerSet[killAction.Killer] = struct{}{}
 	}
 
-	if _, exists := g.Kills[killAction.Killed]; !exists {
+	// Check and add the killed player if not already in the PlayerSet
+	if _, exists := g.PlayerSet[killAction.Killed]; !exists {
 		g.Players = append(g.Players, killAction.Killed)
+		g.PlayerSet[killAction.Killed] = struct{}{}
 	}
 
 	if killAction.Killer != "<world>" {

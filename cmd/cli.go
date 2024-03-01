@@ -19,11 +19,15 @@ var rootCmd = &cobra.Command{
 		gameID, _ := cmd.Flags().GetInt("game")
 		groupedGames := parser.ParserQuakeGameFile(file, gameID)
 
-		jsonData, err := json.MarshalIndent(groupedGames, "", "  ")
-		if err != nil {
-			log.Fatalf("Error occurred during marshaling. Error: %s", err.Error())
+		for gameID, game := range groupedGames.GameDetails {
+			gameMap := map[string]*parser.Game{gameID: game}
+			gameJSON, err := json.MarshalIndent(gameMap, "", "  ")
+			if err != nil {
+				log.Fatalf("Error marshaling game %s: %v", gameID, err)
+			}
+			fmt.Println(string(gameJSON))
+			fmt.Println()
 		}
-		fmt.Println(string(jsonData))
 	},
 }
 

@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 	"qparser/parser"
+	"sort"
 
 	"github.com/spf13/cobra"
 )
@@ -19,11 +20,19 @@ var rootCmd = &cobra.Command{
 		gameID, _ := cmd.Flags().GetInt("game")
 		groupedGames := parser.ParserQuakeGameFile(file, gameID)
 
-		for gameID, game := range groupedGames.GameDetails {
-			gameMap := map[string]*parser.Game{gameID: game}
+		keys := make([]int, 0)
+		for k := range groupedGames.GameDetails {
+			keys = append(keys, k)
+		}
+
+		sort.Ints(keys)
+
+		for _, gameID := range keys {
+			game := groupedGames.GameDetails[gameID]
+			gameMap := map[string]*parser.Game{fmt.Sprintf("game_%d", gameID): game}
 			gameJSON, err := json.MarshalIndent(gameMap, "", "  ")
 			if err != nil {
-				log.Fatalf("Error marshaling game %s: %v", gameID, err)
+				log.Fatalf("Error marshaling game %d: %v", gameID, err)
 			}
 			fmt.Println(string(gameJSON))
 			fmt.Println()

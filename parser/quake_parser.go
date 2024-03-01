@@ -42,7 +42,7 @@ func createGamesFromLogFile(scanner *bufio.Scanner, targetGame int) *QuakeGames 
 			}
 		case "InitGame":
 			if currentGame != nil && (targetGame == currentGameId || targetGame == -1) {
-				groupedQuakeGames.AddGame(fmt.Sprintf("game_%d", currentGameId), currentGame)
+				groupedQuakeGames.AddGame(currentGameId, currentGame)
 			}
 			currentGameId++
 			if targetGame == currentGameId || targetGame == -1 {

@@ -1,7 +1,7 @@
 package parser
 
 type QuakeGames struct {
-	GameDetails map[string]*Game `json:"games"`
+	GameDetails map[int]*Game `json:"games"`
 }
 
 type Game struct {
@@ -20,11 +20,11 @@ type Killing struct {
 
 func NewGroupQuakeGames() *QuakeGames {
 	return &QuakeGames{
-		GameDetails: make(map[string]*Game),
+		GameDetails: make(map[int]*Game),
 	}
 }
 
-func (group *QuakeGames) AddGame(gameID string, game *Game) {
+func (group *QuakeGames) AddGame(gameID int, game *Game) {
 	group.GameDetails[gameID] = game
 }
 

@@ -22,6 +22,27 @@ go build -o qparser
 
 output:
 ```json
+{
+  "game_3": {
+    "total_kills": 4,
+    "players": [
+      "Dono da Bola",
+      "Mocinha",
+      "Isgalamido",
+      "Zeh"
+    ],
+    "kills": {
+      "Dono da Bola": -1,
+      "Isgalamido": 1,
+      "Zeh": -2
+    },
+    "kills_by_means": {
+      "MOD_FALLING": 1,
+      "MOD_ROCKET": 1,
+      "MOD_TRIGGER_HURT": 2
+    }
+  }
+}
 ```
 
 ## How `qpaser` works ?

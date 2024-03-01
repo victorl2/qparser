@@ -27,24 +27,35 @@ func createGamesFromLogFile(scanner *bufio.Scanner, targetGame int) *QuakeGames 
 
 	for scanner.Scan() {
 		logLine := scanner.Text()
-		event := logLine[7:12]
+		// get the event parsing from the index 7 until the first occurrence of ':'
+		endIndexEvent := strings.Index(logLine[7:], ":")
+		if endIndexEvent == -1 {
+			continue
+		}
+		event := logLine[7 : endIndexEvent+7]
 
 		switch event {
-		case "Kill:":
+		case "Kill":
 			if targetGame == currentGameId || targetGame == -1 {
 				killing := parseKillLine(logLine)
 				currentGame.AddKill(killing)
 			}
-		case "InitG":
+		case "InitGame":
 			currentGameId++
 			if targetGame == currentGameId || targetGame == -1 {
 				currentGame = NewGame()
 			}
-		case "Shutd":
+		case "ShutdownGame":
 			if targetGame == currentGameId || targetGame == -1 {
 				groupedQuakeGames.AddGame(fmt.Sprintf("game_%d", currentGameId), currentGame)
 			}
+		case "ClientUserinfoChanged":
+			if targetGame == currentGameId || targetGame == -1 {
+				playerName := parsePlayerName(logLine)
+				currentGame.AddPlayer(playerName)
+			}
 		}
+
 	}
 
 	return groupedQuakeGames
@@ -63,4 +74,11 @@ func parseKillLine(logLine string) *Killing {
 	killedName := names[1]
 	weaponUsed := detailParts[1]
 	return &Killing{killerName, killedName, weaponUsed}
+}
+
+func parsePlayerName(logLine string) string {
+	nameStart := strings.Index(logLine, "n\\") + 2 // Find the start, skipping "n\"
+	remaining := logLine[nameStart:]
+	nameEnd := strings.Index(remaining, "\\")
+	return remaining[:nameEnd]
 }

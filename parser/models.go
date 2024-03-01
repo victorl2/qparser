@@ -1,7 +1,7 @@
 package parser
 
 type QuakeGames struct {
-	GameDetails map[string]*Game `json:"games"` // Use pointers to Games for easy updates
+	GameDetails map[string]*Game `json:"games"`
 }
 
 type Game struct {
@@ -35,6 +35,14 @@ func NewGame() *Game {
 		KillByMeans: make(map[string]int),
 		Players:     make([]string, 0),
 		PlayerSet:   make(map[string]struct{}),
+	}
+}
+
+func (g *Game) AddPlayer(player string) {
+	// add player if and only if it's not already in the PlayerSet
+	if _, exists := g.PlayerSet[player]; !exists {
+		g.Players = append(g.Players, player)
+		g.PlayerSet[player] = struct{}{}
 	}
 }
 

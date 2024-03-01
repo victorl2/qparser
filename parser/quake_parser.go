@@ -17,7 +17,6 @@ func ParserQuakeGameFile(logFilePath string, gameID int) *QuakeGames {
 	scanner := bufio.NewScanner(logFile)
 
 	return createGamesFromLogFile(scanner, gameID)
-
 }
 
 func createGamesFromLogFile(scanner *bufio.Scanner, targetGame int) *QuakeGames {
@@ -26,12 +25,16 @@ func createGamesFromLogFile(scanner *bufio.Scanner, targetGame int) *QuakeGames 
 	var currentGame *Game = nil
 
 	for scanner.Scan() {
+		if targetGame != -1 && currentGameId > targetGame {
+			break
+		}
+
 		logLine := scanner.Text()
-		// get the event parsing from the index 7 until the first occurrence of ':'
 		endIndexEvent := strings.Index(logLine[7:], ":")
 		if endIndexEvent == -1 {
 			continue
 		}
+
 		event := logLine[7 : endIndexEvent+7]
 
 		switch event {

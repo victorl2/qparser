@@ -32,6 +32,7 @@ func NewGame() *Game {
 	return &Game{
 		Kills:       make(map[string]int),
 		KillByMeans: make(map[string]int),
+		Players:     make([]string, 0),
 	}
 }
 

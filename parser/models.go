@@ -28,7 +28,6 @@ func (group *QuakeGames) AddGame(gameID string, game *Game) {
 	group.GameDetails[gameID] = game
 }
 
-// NewGame initializes a new Game instance
 func NewGame() *Game {
 	return &Game{
 		Kills:       make(map[string]int),
@@ -39,21 +38,18 @@ func NewGame() *Game {
 }
 
 func (g *Game) AddPlayer(player string) {
-	// add player if and only if it's not already in the PlayerSet
 	if _, exists := g.PlayerSet[player]; !exists {
 		g.Players = append(g.Players, player)
 		g.PlayerSet[player] = struct{}{}
 	}
 }
 
-// AddKill increments the kill count for a player and total kills
 func (g *Game) AddKill(killAction *Killing) {
 	if _, exists := g.PlayerSet[killAction.Killer]; !exists && killAction.Killer != "<world>" {
 		g.Players = append(g.Players, killAction.Killer)
 		g.PlayerSet[killAction.Killer] = struct{}{}
 	}
 
-	// Check and add the killed player if not already in the PlayerSet
 	if _, exists := g.PlayerSet[killAction.Killed]; !exists {
 		g.Players = append(g.Players, killAction.Killed)
 		g.PlayerSet[killAction.Killed] = struct{}{}

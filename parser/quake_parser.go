@@ -54,7 +54,10 @@ func createGamesFromLogFile(scanner *bufio.Scanner, targetGame int) *QuakeGames 
 				currentGame.AddPlayer(playerName)
 			}
 		}
+	}
 
+	if currentGame != nil && (targetGame == currentGameId || targetGame == -1) {
+		groupedQuakeGames.AddGame(currentGameId, currentGame)
 	}
 
 	return groupedQuakeGames

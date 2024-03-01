@@ -1,7 +1,5 @@
 package parser
 
-import "fmt"
-
 type QuakeGames struct {
 	GameDetails map[string]*Game `json:"games"` // Use pointers to Games for easy updates
 }
@@ -32,7 +30,8 @@ func (group *QuakeGames) AddGame(gameID string, game *Game) {
 // NewGame initializes a new Game instance
 func NewGame() *Game {
 	return &Game{
-		Kills: make(map[string]int),
+		Kills:       make(map[string]int),
+		KillByMeans: make(map[string]int),
 	}
 }
 
@@ -52,14 +51,6 @@ func (g *Game) AddKill(killAction *Killing) {
 		g.Kills[killAction.Killed]--
 	}
 
-	// if the weapon is not already in the map, add it
-	if _, exists := g.KillByMeans[killAction.Weapon]; !exists {
-		fmt.Println("Adding weapon to map")
-		fmt.Println(killAction.Weapon)
-		g.KillByMeans[killAction.Weapon] = 1
-	} else {
-		g.KillByMeans[killAction.Weapon] += 1
-	}
-
+	g.KillByMeans[killAction.Weapon]++
 	g.TotalKills++
 }

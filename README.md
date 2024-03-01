@@ -46,6 +46,4 @@ output:
 ```
 
 ## How `qpaser` works ?
-Matches of **Quake 3 Arena** produce a log file containing their kill feed. A single log file can contain zero or more game matches. 
-
-`qparser` reads the log file and parse/interpret the matches. It then summarizes the matches and prints the result to the standard output containing the _kill feed_.
+Matches of **Quake 3 Arena** produce a log file containing their kill feed. A log file can contain zero or more game matches. `qparser` reads the log file and parse/interpret the matches. It then summarizes the matches and prints a json to the standard output containing the _kill feed_ as shown above.

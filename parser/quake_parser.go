@@ -10,8 +10,8 @@ import (
 func ParserQuakeGameFile(logFilePath string, gameID int) *QuakeGames {
 	logFile, err := os.Open(logFilePath)
 	if err != nil {
-		fmt.Printf("Error opening file: %s\n", err)
-		return nil
+		fmt.Printf("Error opening file the '%s'\n", logFilePath)
+		os.Exit(1)
 	}
 	defer logFile.Close()
 	scanner := bufio.NewScanner(logFile)

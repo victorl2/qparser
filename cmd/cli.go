@@ -1,7 +1,9 @@
 package cmd
 
 import (
+	"encoding/json"
 	"fmt"
+	"log"
 	"os"
 	"qparser/parser"
 
@@ -15,7 +17,13 @@ var rootCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		file := args[0]
 		gameID, _ := cmd.Flags().GetInt("game")
-		parser.ParserQuakeGameFile(file, gameID)
+		groupedGames := parser.ParserQuakeGameFile(file, gameID)
+
+		jsonData, err := json.MarshalIndent(groupedGames, "", "  ")
+		if err != nil {
+			log.Fatalf("Error occurred during marshaling. Error: %s", err.Error())
+		}
+		fmt.Println(string(jsonData))
 	},
 }
 

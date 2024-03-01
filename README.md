@@ -5,18 +5,19 @@
 You must have [Go version 1.21 or later](https://go.dev/) installed on your machine. Then, you can clone the repository and install the parser:
 ```bash
 git clone https://github.com/victorl2/qparser.git
+go build -o qparser
 ```
 
 ## Usage 
 ```sh
 # help message with all available commands
-qpaser --help
+./qpaser --help
 
 # summarize all matches in the file
-qpaser file.log
+./qpaser file.log
 
 # summarize a single match
-qpaser file.log --game 3
+./qpaser file.log --game 3
 ```
 
 output:

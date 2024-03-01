@@ -1,5 +1,7 @@
 package parser
 
+import "fmt"
+
 type QuakeGames struct {
 	GameDetails map[string]*Game `json:"games"` // Use pointers to Games for easy updates
 }
@@ -11,10 +13,20 @@ type Game struct {
 	KillByMeans map[string]int `json:"kills_by_means"`
 }
 
+type Killing struct {
+	Killer string
+	Killed string
+	Weapon string
+}
+
 func NewGroupQuakeGames() *QuakeGames {
 	return &QuakeGames{
 		GameDetails: make(map[string]*Game),
 	}
+}
+
+func (group *QuakeGames) AddGame(gameID string, game *Game) {
+	group.GameDetails[gameID] = game
 }
 
 // NewGame initializes a new Game instance
@@ -25,21 +37,29 @@ func NewGame() *Game {
 }
 
 // AddKill increments the kill count for a player and total kills
-func (g *Game) AddKill(killerName string, killedName string, weapon string) {
-	if _, exists := g.Kills[killerName]; !exists {
-		g.Players = append(g.Players, killerName)
+func (g *Game) AddKill(killAction *Killing) {
+	if _, exists := g.Kills[killAction.Killer]; !exists {
+		g.Players = append(g.Players, killAction.Killer)
 	}
 
-	if _, exists := g.Kills[killedName]; !exists {
-		g.Players = append(g.Players, killedName)
+	if _, exists := g.Kills[killAction.Killed]; !exists {
+		g.Players = append(g.Players, killAction.Killed)
 	}
 
-	if killerName != "<world>" {
-		g.Kills[killerName]++
+	if killAction.Killer != "<world>" {
+		g.Kills[killAction.Killer]++
 	} else {
-		g.Kills[killedName]--
+		g.Kills[killAction.Killed]--
 	}
 
-	g.KillByMeans[weapon]++
+	// if the weapon is not already in the map, add it
+	if _, exists := g.KillByMeans[killAction.Weapon]; !exists {
+		fmt.Println("Adding weapon to map")
+		fmt.Println(killAction.Weapon)
+		g.KillByMeans[killAction.Weapon] = 1
+	} else {
+		g.KillByMeans[killAction.Weapon] += 1
+	}
+
 	g.TotalKills++
 }

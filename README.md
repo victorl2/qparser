@@ -1,5 +1,5 @@
 # `qpaser`
-`dfdffff` is a bbb og files produced by **Quake 3 Arena server**.
+`ddddddddddddddddddddd` is a bbb og files produced by **Quake 3 Arena server**.
 ddddd
 ## Installation
 You must have [Go version 1.21 or later](https://go.dev/) installed on your machine. Then, you can clone the repository and install the parser:

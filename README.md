@@ -3,6 +3,7 @@
 
 ## Installation
 You must have [Go version 1.21 or later](https://go.dev/) installed on your machine. Then, you can clone the repository and install the parser:
+
 ```bash
 git clone https://github.com/victorl2/qparser.git
 cd qparser

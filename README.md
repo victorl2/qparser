@@ -2,7 +2,7 @@
 `ddddddddddddddddddddd` is a bbb og files produced by **Quake 3 Arena server**.
 dddddaaaaaaaaaaaaaaaaadddddddddddddddddddddaaalopj;ojmsasasasasa
 ## Installation
-You must have [Go version 1.21 or later](https://go.dev/) installed on your machine. Then, you can clone the repository and install the parser: kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkaaaaaaaaaaaaaavbcbvccvbcbv
+You must have [Go version 1.21 or later](https://go.dev/) installed on your machine. Then, you can clone the repository and install the parser: kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkaaaaaaaaaaaaaavbcbvccvbcbviyuiyuihhij
 ```bash
 git clone https://github.com/victorl2/qparser.git
 cd qparser

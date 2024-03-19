@@ -6,7 +6,7 @@ You must have [Go version 1.21 or later](https://go.dev/) installed on your mach
 ```bash
 git clone https://github.com/victorl2/qparser.git
 cd qparser
-go build -o qparser
+go build -o qparsernmbmnbmbnbnm
 ```bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
 
 ## Usage 

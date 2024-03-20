@@ -9,7 +9,7 @@ cd qparser
 go build -o qparsernmbmnbmbnbnm
 ```bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
 
-## Usage 
+## Usage fffff
 ```sh
 # help message with all available commands
 ./qpaser --help

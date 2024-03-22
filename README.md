@@ -2,7 +2,7 @@
 `qpaser` is a parser for log files produced by **Quake 3 Arena server**.
 
 ## Installation
-You must have [Go version 1.21 or later](https://go.dev/) installed on your machine. Then, you can clone the repository and install the parser:
+You must have [Go version 1.21 or later](https://go.dev/) installed on your machine. Then, you can clone the repository and install the parser:aaaaaa
 ```bash
 git clone https://github.com/victorl2/qparser.git
 cd qparser

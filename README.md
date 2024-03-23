@@ -12,7 +12,7 @@ go build -o qparser
 ## Usage 
 ```sh
 # help message with all available commands
-./qpaser --help
+./qpaser --helpbbbbbbb
 
 # summarize all matches in the file
 ./qpaser file.log
